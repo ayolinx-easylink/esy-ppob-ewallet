@@ -37,7 +37,7 @@ sequenceDiagram
     participant U as User
     participant A as App Easylink
     participant W as Backend Easylink
-    participant P as Pivot
+    participant P as Pivot Wallet
     participant PPOB as Provider PPOB
 
     %% Create Order
