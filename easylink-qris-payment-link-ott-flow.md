@@ -43,7 +43,7 @@ sequenceDiagram
     participant U as User
     participant A as App Easylink
     participant W as Backend Easylink
-    participant P as Pivot
+    participant P as Pivot Wallet
     participant Q as QRIS Merchant
 
     %% Initiate QRIS Payment
