@@ -69,7 +69,7 @@ sequenceDiagram
 
     %% Step 5 - User Authorization
     P-->>A: Request PIN Authorization
-    A-->>U: Show PIN Screen
+    A-->>U: Show PIN Screen (Web View Pivot)
 
     U->>A: Input Wallet PIN
     A->>P: Submit PIN Authorization
