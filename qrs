@@ -1,3 +1,6 @@
+# Diagram Sequence Flow QR Standar
+
+```mermaid
 sequenceDiagram
     autonumber
     actor U as User
@@ -41,3 +44,6 @@ sequenceDiagram
         A-->>M: Status transaksi gagal
         deactivate I
     end
+```
+
+Catatan: diagram menggunakan skenario **Merchant Presented Mode (MPM)**. Detail validasi, notifikasi, clearing, dan settlement dapat berbeda sesuai skema QR dan implementasi penyelenggara.
