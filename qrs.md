@@ -1,4 +1,4 @@
-# Diagram Sequence Flow QR Standar
+# Standard QR Payment Sequence Diagram
 
 ```mermaid
 sequenceDiagram
@@ -9,37 +9,37 @@ sequenceDiagram
     participant A as Acquirer
     participant M as Merchant
 
-    Note over U,M: QR Merchant Presented Mode (MPM)
-    M-->>U: Menampilkan QR pembayaran
-    U->>U: Scan QR dan konfirmasi nominal
-    U->>I: Instruksi pembayaran (QR data, nominal, PIN/biometrik)
-    I->>I: Validasi user, autentikasi, dan saldo/limit
-    I->>S: Request otorisasi pembayaran
-    S->>S: Validasi format dan routing transaksi
-    S->>A: Teruskan request ke acquirer
-    A->>A: Validasi merchant dan data QR
+    Note over U,M: QR Merchant-Presented Mode (MPM)
+    M-->>U: Display payment QR code
+    U->>U: Scan QR code and confirm amount
+    U->>I: Submit payment instruction (QR data, amount, PIN/biometrics)
+    I->>I: Validate user, authentication, and balance/limit
+    I->>S: Send payment authorization request
+    S->>S: Validate message format and transaction routing
+    S->>A: Forward request to acquirer
+    A->>A: Validate merchant and QR data
 
-    alt Transaksi disetujui
-        A->>A: Cek tipe QR static atau dynamic
-        alt QR static
-            A->>A: Buat transaksi QR merchant baru
-            A->>A: Set status transaksi menjadi PAID
-        else QR dynamic
-            A->>A: Cari transaksi payment berdasarkan data QR
-            A->>A: Update status transaksi payment menjadi PAID
+    alt Transaction approved
+        A->>A: Determine whether QR code is static or dynamic
+        alt Static QR code
+            A->>A: Create a new merchant QR transaction
+            A->>A: Set transaction status to PAID
+        else Dynamic QR code
+            A->>A: Find payment transaction using QR data
+            A->>A: Update payment transaction status to PAID
         end
-        A-->>M: Callback status payment: PAID
-        A-->>S: Response approved
-        S-->>I: Response approved
-        I->>I: Debit rekening/saldo user
-        I-->>U: Notifikasi pembayaran berhasil
-        Note over I,A: Clearing dan settlement dilakukan sesuai jadwal
-    else Transaksi ditolak
-        A-->>S: Response declined + reason code
-        S-->>I: Response declined + reason code
-        I-->>U: Notifikasi pembayaran gagal
-        A-->>M: Callback status payment: FAILED
+        A-->>M: Payment status callback: PAID
+        A-->>S: Return approved response
+        S-->>I: Return approved response
+        I->>I: Debit user's account/balance
+        I-->>U: Send successful payment notification
+        Note over I,A: Clearing and settlement are processed according to schedule
+    else Transaction declined
+        A-->>S: Return declined response and reason code
+        S-->>I: Return declined response and reason code
+        I-->>U: Send failed payment notification
+        A-->>M: Payment status callback: FAILED
     end
 ```
 
-Catatan: diagram menggunakan skenario **Merchant Presented Mode (MPM)**. Acquirer memproses transaksi berdasarkan tipe QR, sedangkan Merchant hanya menerima callback status payment dari Acquirer. Detail validasi, notifikasi, clearing, dan settlement dapat berbeda sesuai skema QR dan implementasi penyelenggara.
+Note: This diagram uses the **Merchant-Presented Mode (MPM)** scenario. The Acquirer processes the transaction according to the QR code type, while the Merchant only receives payment status callbacks from the Acquirer. Validation, notification, clearing, and settlement details may vary depending on the QR payment scheme and provider implementation.
